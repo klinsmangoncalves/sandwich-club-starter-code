@@ -1,59 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.udacity.sandwichclub.DetailActivity">
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".DetailActivity">
 
-    <ImageView
-        android:id="@+id/image_iv"
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/sandwich_picture_content_description"
-        android:scaleType="centerCrop" />
+        android:layout_height="@dimen/sandwich_image">
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/image_iv"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/sandwich_picture_content_description"
+             />
+    </FrameLayout>
 
-    <TextView
-        android:id="@+id/origin_tv"
+    <ScrollView
+        android:paddingHorizontal="4dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/detail_also_known_as_label"
-        android:textStyle="bold" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_place_of_origin_label"
+                style="@style/sandwich_detail_label"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/detail_ingredients_label"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/origin_tv"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/detail_place_of_origin_label"
-        android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_also_known_as_label"
+                style="@style/sandwich_detail_label"/>
 
-    <TextView
-        android:id="@+id/description_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/also_known_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"/>
 
-    <TextView
-        android:id="@+id/ingredients_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_description_label"
+                style="@style/sandwich_detail_label"/>
 
-    <TextView
-        android:id="@+id/also_known_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/description_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/detail_description_label"
-        android:textStyle="bold" />
-</FrameLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/detail_ingredients_label"
+                style="@style/sandwich_detail_label"/>
+
+            <TextView
+                android:id="@+id/ingredients_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

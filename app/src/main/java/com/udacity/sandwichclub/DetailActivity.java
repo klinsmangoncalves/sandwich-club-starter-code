@@ -3,9 +3,12 @@ package com.udacity.sandwichclub;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 import com.udacity.sandwichclub.model.Sandwich;
 import com.udacity.sandwichclub.utils.JsonUtils;
@@ -20,7 +23,7 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        ImageView ingredientsIv = findViewById(R.id.image_iv);
+        final ImageView ingredientsIv = findViewById(R.id.image_iv);
 
         Intent intent = getIntent();
         if (intent == null) {
@@ -43,12 +46,27 @@ public class DetailActivity extends AppCompatActivity {
             return;
         }
 
-        populateUI();
+        populateUI(sandwich);
         Picasso.with(this)
                 .load(sandwich.getImage())
-                .into(ingredientsIv);
+                .placeholder(R.drawable.progress_animation)
+                .into(ingredientsIv, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        int imageHeight = (int) getResources().getDimension(R.dimen.sandwich_image);
+                        ingredientsIv.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                        ingredientsIv.getLayoutParams().height = imageHeight;
+                    }
+
+                    @Override
+                    public void onError() {
+                        ingredientsIv.setImageResource(R.drawable.onloaderror);
+                    }
+                });
 
         setTitle(sandwich.getMainName());
+        onStop();
+        onRestart();
     }
 
     private void closeOnError() {
@@ -56,7 +74,27 @@ public class DetailActivity extends AppCompatActivity {
         Toast.makeText(this, R.string.detail_error_message, Toast.LENGTH_SHORT).show();
     }
 
-    private void populateUI() {
+    private void populateUI(Sandwich sandwich) {
+        TextView placeOriginTextView = findViewById(R.id.origin_tv);
+        TextView alsoKnownTextView = findViewById(R.id.also_known_tv);
+        TextView descriptionTextView = findViewById(R.id.description_tv);
+        TextView ingredientsTextView = findViewById(R.id.ingredients_tv);
 
+        placeOriginTextView.setText(sandwich.getPlaceOfOrigin());
+
+        StringBuffer sb = new StringBuffer();
+        for (String name : sandwich.getAlsoKnownAs()) {
+            sb.append(name + ", ");
+        }
+        alsoKnownTextView.setText(sb.length() <= 0 ? "" : sb.substring(0, sb.length() - 2));
+
+        descriptionTextView.setText(sandwich.getDescription());
+
+        sb = new StringBuffer();
+        for (String name : sandwich.getIngredients()) {
+            sb.append(name + "\n");
+        }
+
+        ingredientsTextView.setText(sb.toString());
     }
 }
